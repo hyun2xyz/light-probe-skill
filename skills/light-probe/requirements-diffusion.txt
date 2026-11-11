@@ -1,0 +1,12 @@
+# Optional only. Install the hardware-appropriate PyTorch build first:
+# https://pytorch.org/get-started/locally/
+# See references/diffusion.md for the tested environment and validation limits.
+-r requirements.txt
+# These minor series match the source environment's loading/LoRA APIs.
+diffusers>=0.33.1,<0.34
+transformers>=4.51.3,<4.52
+huggingface-hub>=0.36.2,<0.37
+peft>=0.21.2,<0.22
+accelerate>=1.15.0,<1.16
+safetensors>=0.8.0,<0.9
+filelock>=3.12,<5

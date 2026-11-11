@@ -1,0 +1,115 @@
+# Light Probe
+
+**사진 한 장으로 빛이 오는 방향을 보고, 객체 윤곽과 반사 경로를 함께 읽는 LLM 스킬.**
+
+[lms.hyun2.cloud](https://lms.hyun2.cloud) 공통강의 수강생을 위한 로컬 실습 도구입니다.
+원본 컬러 위에 흑백 광선·해 기호, 옅은 객체 마스크, 이름·재질·반사율 라벨을 그립니다.
+
+## 링크 하나로 시작
+
+**Codex, Claude Code처럼 이미지 확인·파일 저장·Python 실행이 가능한 LLM**에 아래 문장을 붙여 넣으세요.
+
+```text
+https://github.com/hyun2xyz/light-probe-skill
+이 저장소의 README와 skills/light-probe/SKILL.md를 읽고 내 환경에 설치해줘.
+기본 quick 모드로 준비하고, 내가 사진을 올리면 빛 방향과 객체 윤곽을 이미지로 보여줘.
+DiffusionLight의 큰 모델은 내가 요청할 때만 받아줘.
+```
+
+그다음 사진을 첨부하고 이렇게 요청합니다.
+
+```text
+이 사진에서 빛이 어디서 오는지 표시해줘.
+객체 윤곽은 채도 낮은 색으로 옅게 덮고, 객체 이름과 반사율도 넣어줘.
+빛이 다른 표면에 부딪혀 퍼지는 경로도 보여줘. 사진은 컬러로 유지해줘.
+```
+
+링크를 읽기만 하는 일반 웹 채팅은 컴퓨터에 설치하거나 Python을 실행하지 못할 수 있습니다.
+이때는 코드 실행이 가능한 환경으로 옮겨 진행하세요. 스킬 설치 후 목록에 안 보이면 새 대화를 시작하세요.
+
+## 하는 일
+
+| 경로 | 용도 | 준비 |
+|---|---|---|
+| 기본 `quick` | 밝은 영역 기반 광원 후보·2D 방향 설명 | Python 3.10+, 작은 이미지 처리 패키지 |
+| 선택 `diffusion` | DiffusionLight 크롬볼 생성 기반 조명 추정 | PyTorch, 여러 GB 모델, 적합한 GPU 권장 |
+| 객체·산란 표시 | LLM이 판독한 윤곽과 재질 입력으로 도판 생성 | 사진을 볼 수 있는 LLM + context JSON |
+
+**기본 quick은 DiffusionLight가 아닙니다.** 흰 벽이나 반사면을 광원으로 오인할 수 있습니다.
+객체 윤곽은 LLM 판독 기반 근사 마스크이며 YOLO/SAM 검출기가 기본으로 실행되지 않습니다.
+반사율은 재질별 설명용 입력값이고, 다중 반사는 지정한 2D 표면의 시뮬레이션입니다.
+사진 한 장에서 실제 3D 구조·조도·정확한 물성을 측정하는 도구가 아닙니다.
+
+## 직접 설치
+
+Git과 Python 3.10+를 준비한 뒤 아래를 실행합니다. Windows에서는 `python` 대신 `py -3`도 가능합니다.
+
+```sh
+git clone https://github.com/hyun2xyz/light-probe-skill.git
+cd light-probe-skill
+python install.py --client codex --setup
+```
+
+Claude Code는 마지막 줄을 아래로 바꿉니다.
+
+```sh
+python install.py --client claude --setup
+```
+
+설치 위치는 Codex `~/.agents/skills/light-probe`, Claude Code `~/.claude/skills/light-probe`입니다.
+기존 폴더가 있으면 멈춥니다. 검토 후 `--replace`를 붙이면 스킬 검색 폴더 밖의 `light-probe-backups`에 이전 버전을 보관합니다.
+가상환경은 설치된 스킬의 `.venv`에만 생성하며 모델은 다운로드하지 않습니다.
+클라이언트 등록 없이 저장소에서 사용하려면 `python skills/light-probe/scripts/bootstrap.py`를 실행하세요.
+
+공식 설치 위치 안내: [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Claude Code skills](https://code.claude.com/docs/en/skills).
+
+## 실행 예시
+
+아래는 저장소 폴더에서 실행하는 예시입니다. 설치본을 사용하면 해당 스킬 폴더의 `scripts/run.py`를 호출하세요.
+
+```sh
+python skills/light-probe/scripts/run.py analyze photo.jpg --out outputs/my-photo --mode quick --display direction
+```
+
+객체 윤곽·반사율·다중 산란은 LLM이 만든 `context.json`을 함께 전달합니다.
+스키마와 예시는 [객체 입력 설명](skills/light-probe/references/scene-context.md)에 있습니다.
+
+```sh
+python skills/light-probe/scripts/run.py analyze photo.jpg --out outputs/my-objects --mode quick --display all --context context.json
+```
+
+결과는 `annotated.png`, `result.json`, `status.json`, 원본 색을 보존한 `input.png`입니다.
+이미 존재하는 결과 폴더는 덮어쓰지 않습니다. 디자인 수정에는 모델 재추론 없이 `render`를 사용합니다.
+
+```sh
+python skills/light-probe/scripts/run.py render --result outputs/my-objects/result.json --out outputs/revised --context revised-context.json
+```
+
+DiffusionLight를 쓰려면 [선택 모델 설치](skills/light-probe/references/diffusion.md)를 읽으세요.
+상태 확인은 `scripts/download_models.py --check`, 다운로드는 별도 `--download` 명령입니다.
+
+## 공개 데모와 검증
+
+동봉 데모는 직접 그린 합성 실내 장면입니다. 실제 사진이나 모델 정확도 벤치마크가 아닙니다.
+
+![합성 장면 데모](docs/demo-annotated.png)
+
+```sh
+python examples/make_demo.py --out outputs/demo-input
+python skills/light-probe/scripts/run.py analyze outputs/demo-input/room.png --out outputs/demo --display all --context outputs/demo-input/context.json
+python -m unittest discover -s skills/light-probe/scripts -p "test_*.py" -v
+python -m unittest discover -s tests -v
+```
+
+테스트는 가상환경의 Python으로 실행하세요. macOS/Linux는 `skills/light-probe/.venv/bin/python`, Windows는 `skills/light-probe/.venv/Scripts/python.exe`입니다.
+[GitHub Actions](https://github.com/hyun2xyz/light-probe-skill/actions)에서 OS별 설치·테스트 결과를 확인할 수 있습니다.
+
+## 데이터와 라이선스
+
+Python 실행기는 사용자 사진을 외부 API로 전송하지 않습니다. 채팅에 업로드한 사진은 사용하는 LLM 서비스의 정책을 따릅니다.
+패키지 설치와 명시적인 모델 다운로드에는 외부 네트워크를 사용합니다.
+사진·모델·API 키·개인 경로는 저장소와 배포 ZIP에 포함하지 않습니다.
+
+자체 코드는 [MIT](LICENSE), DiffusionLight의 재사용 코드와 모델별 조건은 [고지](skills/light-probe/THIRD_PARTY_LICENSE.txt)를 따릅니다.
+한글 폰트는 Google Fonts가 배포하는 NanumGothic이며 [SIL OFL 1.1](skills/light-probe/assets/fonts/OFL.txt)입니다.
+폰트 원본: [google/fonts](https://github.com/google/fonts/tree/main/ofl/nanumgothic).

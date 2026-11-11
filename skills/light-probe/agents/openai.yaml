@@ -1,0 +1,4 @@
+interface:
+  display_name: "Light Probe · 빛 방향"
+  short_description: "사진의 광원 방향과 객체 윤곽·반사 경로를 이미지로 표시합니다"
+  default_prompt: "Use $light-probe to analyze this photo and draw its light direction with muted object silhouettes."

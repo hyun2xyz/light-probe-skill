@@ -1,0 +1,70 @@
+DiffusionLight source attribution
+================================
+
+scripts/diffusion_engine.py adapts the mirror-ball inpainting/LoRA schedule and
+exposure-bracket merge from the official DiffusionLight-Turbo projects:
+
+https://github.com/DiffusionLight/DiffusionLight-Turbo-diffusers
+https://github.com/DiffusionLight/DiffusionLight-Turbo
+
+Reference files: inpaint.py, ball2envmap.py, exposure2hdr.py.
+Local adaptation: generic image anchor, Apple MPS/CPU support, local-only model
+loading, progress callbacks, pinned model checks, direction extraction, and
+an explicitly approximate single-exposure fast mode.
+
+MIT License
+
+Copyright (c) 2025 Pakkapon Phongthawee
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Model weights (downloaded separately, not included with this skill)
+================================================================
+
+Model weights retain their own licenses and use restrictions. The MIT source
+license above does not replace those licenses. The optional downloader uses the
+official huggingface_hub SDK to fetch all 25 required files from six repositories
+at fixed commit revisions. Files are checked against pinned sizes and hashes:
+SHA256 for model weights and Git blob SHA1 for small configuration/tokenizer files.
+Existing valid components are reused from the standard or user-selected Hugging
+Face cache. Model weights are not redistributed in this skill package.
+See references/diffusion.md for setup, model sources and validation limits.
+
+- stabilityai/stable-diffusion-xl-base-1.0
+  CreativeML Open RAIL++-M
+  https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0
+  https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/blob/main/LICENSE.md
+
+- diffusers/controlnet-depth-sdxl-1.0
+  CreativeML Open RAIL++-M
+  https://huggingface.co/diffusers/controlnet-depth-sdxl-1.0
+  https://huggingface.co/diffusers/controlnet-depth-sdxl-1.0/blob/main/LICENSE.md
+
+- madebyollin/sdxl-vae-fp16-fix
+  MIT
+  https://huggingface.co/madebyollin/sdxl-vae-fp16-fix
+
+- Intel/dpt-large
+  Apache License 2.0
+  https://huggingface.co/Intel/dpt-large
+
+- DiffusionLight/Flickr2K and DiffusionLight/DiffusionLight
+  MIT (model repository metadata); use also requires the underlying SDXL terms.
+  https://huggingface.co/DiffusionLight/Flickr2K
+  https://huggingface.co/DiffusionLight/DiffusionLight
