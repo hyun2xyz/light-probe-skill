@@ -1,4 +1,5 @@
-# Optional only. Install the hardware-appropriate PyTorch build first:
+# Default student setup: install the hardware-appropriate PyTorch build first.
+# Skip this file only for an explicitly requested quick-only setup.
 # https://pytorch.org/get-started/locally/
 # See references/diffusion.md for the tested environment and validation limits.
 -r requirements.txt

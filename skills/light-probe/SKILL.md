@@ -13,12 +13,15 @@ description: 사진의 광원 후보·빛 방향을 PNG로 표시하고 객체 �
 
 이 파일이 있는 폴더를 `SKILL_DIR`로 사용한다. 개인 컴퓨터의 고정 경로를 추측하지 않는다.
 Python 3.10+와 셸·파일 실행 권한이 필요하다. 실행할 수 없는 환경이면 완료했다고 말하지 말고 필요한 환경을 안내한다.
-`references/runtime.md`는 최초 설치나 환경 오류가 있을 때만 읽는다.
+최초 링크 설치에는 `references/student-install.md`와 `references/diffusion.md`를 읽고 환경 확인부터 모델 가중치 검증까지 수행한다.
+`references/runtime.md`는 기초 환경 설치나 오류 진단에 사용한다.
 
 1. `python <SKILL_DIR>/scripts/bootstrap.py --check`로 기본 환경을 확인한다.
 2. 환경이 없으면 설치 요청 범위에서 `python <SKILL_DIR>/scripts/bootstrap.py`를 실행한다.
 3. 이후 `python <SKILL_DIR>/scripts/run.py ...`를 사용한다. 이 래퍼가 스킬의 가상환경을 사용한다.
-4. 패키지 다운로드에는 네트워크가 필요하다. 기본 모드는 모델 다운로드·API 키가 필요 없다.
+4. bootstrap은 기초 패키지만 설치한다. 여기서 끝내지 말고 환경에 맞는 PyTorch·DiffusionLight 의존성을 같은 가상환경에 설치한다.
+5. 기존 모델을 `scripts/download_models.py --check --verify`로 확인하고, 누락되었으면 `--download`를 실행해 약 11.0 GB 가중치를 준비한다. 수강생의 추가 모델 설치 요청을 기다리지 않는다.
+6. 패키지·모델 다운로드에는 네트워크가 필요하다. 의존성과 모델 파일 검증까지 통과해야 설치 완료다. 실제 실행 환경이 요구하는 권한이나 인증은 우회하지 않는다.
 
 ## 이미지와 장면 판독
 
@@ -33,12 +36,12 @@ Python 3.10+와 셸·파일 실행 권한이 필요하다. 실행할 수 없는 
 
 ## 실행
 
-기본은 `quick`이다. 밝은 영역을 후보로 찾으며 실제 조명 역추정 모델과 구별한다.
+기본은 `--mode diffusion --quality fast`다. quick은 사용자가 큰 모델 없는 가벼운 분석을 요청했을 때 쓴다.
 아래 명령의 경로는 실제 절대 경로로 바꾸고 공백이 있으면 인수별로 따옴표를 사용한다.
 
 ```sh
 python <SKILL_DIR>/scripts/run.py analyze <IMAGE_PATH> \
-  --out <NEW_OUTPUT_DIR> --mode quick --display direction \
+  --out <NEW_OUTPUT_DIR> --mode diffusion --quality fast --display direction \
   --anchor 0.5 0.65 --context <CONTEXT_JSON>
 ```
 
@@ -49,7 +52,7 @@ python <SKILL_DIR>/scripts/run.py analyze <IMAGE_PATH> \
 - `heatmap`은 원본 색을 유지하며 등밝기선을 겹친다.
 - 입력은 최대 2048px로 줄인다. 분석 성공 여부는 `status.json`과 실제 PNG로 확인한다.
 
-DiffusionLight를 명시했을 때만 `references/diffusion.md`를 읽고 별도 설치·모델 준비를 진행한다.
+DiffusionLight 설치는 링크로 시작한 기본 준비 범위다. 모델 설치를 위한 추가 선택 질문을 반복하지 않는다.
 `--mode diffusion --quality fast`는 512px 단일 노출 크롬볼 추정이며 HDR 측정이 아니다.
 `--quality full`은 1024px 세 노출 합성이다. 실행 시간·GPU 메모리를 미리 보장하지 않는다.
 모델이 없으면 실패를 숨겨 quick 결과를 DiffusionLight 결과처럼 전달하지 않는다.
@@ -76,7 +79,7 @@ python <SKILL_DIR>/scripts/run.py render \
 `analyze ... --background`는 PID·로그·상태 경로를 반환한다.
 `python <SKILL_DIR>/scripts/run.py status <OUTPUT_DIR>`로 확인한다.
 `started`는 완료가 아니다. 실패한 로그를 확인하고 새 출력 폴더로 재시도한다.
-GPU 추론은 한 번에 하나만 실행한다. 모델 다운로드는 추론과 분리하고 명시적으로 실행한다.
+GPU 추론은 한 번에 하나만 실행한다. 설치 단계에서 LLM이 다운로드 명령을 실행하고 완료를 확인한다. 추론 엔진 자체는 offline으로 유지한다.
 
 ## 검수와 전달
 

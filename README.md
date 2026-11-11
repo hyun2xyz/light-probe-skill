@@ -7,14 +7,19 @@
 
 ## 링크 하나로 시작
 
-**Codex, Claude Code처럼 이미지 확인·파일 저장·Python 실행이 가능한 LLM**에 아래 문장을 붙여 넣으세요.
+**Codex, Claude Code처럼 이미지 확인·파일 저장·Python 실행이 가능한 LLM**에 아래 Git 링크를 전달하세요.
 
 ```text
 https://github.com/hyun2xyz/light-probe-skill
-이 저장소의 README와 skills/light-probe/SKILL.md를 읽고 내 환경에 설치해줘.
-기본 quick 모드로 준비하고, 내가 사진을 올리면 빛 방향과 객체 윤곽을 이미지로 보여줘.
-DiffusionLight의 큰 모델은 내가 요청할 때만 받아줘.
 ```
+
+이 저장소의 기본 설치 가이드는 **환경 확인 → 스킬·의존성 설치 → DiffusionLight 모델 가중치 다운로드·검증**까지 포함합니다.
+수강생이 모델 설치를 따로 요청할 필요가 없습니다. 새 모델이 필요하면 약 **11.0 GB**를 받으며, 기존 캐시는 재사용합니다.
+
+**이 링크를 받은 LLM:** 수강생이 사용·설치를 위해 링크를 전달했다면 [학생 설치 절차](skills/light-probe/references/student-install.md)를 읽고 끝까지 실행하세요.
+“DiffusionLight도 설치할까요?”라는 추가 선택 질문 없이 진행 상황과 용량을 안내하고 모델까지 준비합니다.
+`install.py --setup`은 기초 환경까지만 만들므로, 그 명령이 끝났다는 이유로 작업을 마치지 마세요.
+요약·검토만 요청한 경우에는 설치를 실행하지 않고, 사용자가 정한 다운로드 제한과 실행 환경의 권한은 지킵니다.
 
 그다음 사진을 첨부하고 이렇게 요청합니다.
 
@@ -31,18 +36,19 @@ DiffusionLight의 큰 모델은 내가 요청할 때만 받아줘.
 
 | 경로 | 용도 | 준비 |
 |---|---|---|
-| 기본 `quick` | 밝은 영역 기반 광원 후보·2D 방향 설명 | Python 3.10+, 작은 이미지 처리 패키지 |
-| 선택 `diffusion` | DiffusionLight 크롬볼 생성 기반 조명 추정 | PyTorch, 여러 GB 모델, 적합한 GPU 권장 |
+| 기본 `diffusion` | DiffusionLight 크롬볼 생성 기반 조명 추정 | 환경에 맞는 PyTorch·의존성·약 11.0 GB 모델을 설치 절차에서 준비 |
+| 요청 시 `quick` | 밝은 영역 기반 광원 후보·2D 방향 설명 | 큰 모델을 받지 않는 가벼운 대안 |
 | 객체·산란 표시 | LLM이 판독한 윤곽과 재질 입력으로 도판 생성 | 사진을 볼 수 있는 LLM + context JSON |
 
-**기본 quick은 DiffusionLight가 아닙니다.** 흰 벽이나 반사면을 광원으로 오인할 수 있습니다.
+**quick은 DiffusionLight가 아닙니다.** 흰 벽이나 반사면을 광원으로 오인할 수 있습니다.
 객체 윤곽은 LLM 판독 기반 근사 마스크이며 YOLO/SAM 검출기가 기본으로 실행되지 않습니다.
 반사율은 재질별 설명용 입력값이고, 다중 반사는 지정한 2D 표면의 시뮬레이션입니다.
 사진 한 장에서 실제 3D 구조·조도·정확한 물성을 측정하는 도구가 아닙니다.
 
-## 직접 설치
+## 설치 절차와 직접 실행
 
-Git과 Python 3.10+를 준비한 뒤 아래를 실행합니다. Windows에서는 `python` 대신 `py -3`도 가능합니다.
+LLM은 먼저 OS·CPU·Python·GPU/드라이버·메모리·디스크를 확인한 뒤 다음 단계를 수행합니다.
+직접 실행할 때도 같은 순서입니다. Python 3.10+가 필요하며 Windows에서는 `python` 대신 `py -3`도 가능합니다.
 
 ```sh
 git clone https://github.com/hyun2xyz/light-probe-skill.git
@@ -58,8 +64,25 @@ python install.py --client claude --setup
 
 설치 위치는 Codex `~/.agents/skills/light-probe`, Claude Code `~/.claude/skills/light-probe`입니다.
 기존 폴더가 있으면 멈춥니다. 검토 후 `--replace`를 붙이면 스킬 검색 폴더 밖의 `light-probe-backups`에 이전 버전을 보관합니다.
-가상환경은 설치된 스킬의 `.venv`에만 생성하며 모델은 다운로드하지 않습니다.
-클라이언트 등록 없이 저장소에서 사용하려면 `python skills/light-probe/scripts/bootstrap.py`를 실행하세요.
+위 명령은 스킬 복사와 `.venv`의 기초 패키지 설치 단계입니다. **모델 준비는 아직 끝나지 않았습니다.**
+LLM은 이어서 설치된 스킬 폴더에서 [DiffusionLight 준비 절차](skills/light-probe/references/diffusion.md)에 따라 환경에 맞는 PyTorch를 설치하고, 같은 가상환경으로 다음을 실행합니다.
+
+```sh
+python -m pip install -r requirements-diffusion.txt
+python -m pip check
+python scripts/download_models.py --check --verify
+```
+
+필요한 파일이 누락되었으면 별도 요청을 기다리지 않고 다음을 실행합니다.
+
+```sh
+python scripts/download_models.py --download
+python scripts/download_models.py --check --verify
+```
+
+여기서 `python`은 설치된 스킬의 `.venv/bin/python`(macOS/Linux) 또는 `.venv/Scripts/python.exe`(Windows)입니다.
+의존성 검사와 25개 모델 파일 검증이 통과한 뒤 설치 완료를 안내합니다. 오류가 나면 quick으로 몰래 대체하지 않습니다.
+클라이언트 등록 없이 저장소에서 사용할 때도 bootstrap 이후 같은 모델 준비 절차를 수행합니다.
 
 공식 설치 위치 안내: [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Claude Code skills](https://code.claude.com/docs/en/skills).
 
@@ -68,14 +91,14 @@ python install.py --client claude --setup
 아래는 저장소 폴더에서 실행하는 예시입니다. 설치본을 사용하면 해당 스킬 폴더의 `scripts/run.py`를 호출하세요.
 
 ```sh
-python skills/light-probe/scripts/run.py analyze photo.jpg --out outputs/my-photo --mode quick --display direction
+python skills/light-probe/scripts/run.py analyze photo.jpg --out outputs/my-photo --mode diffusion --quality fast --display direction
 ```
 
 객체 윤곽·반사율·다중 산란은 LLM이 만든 `context.json`을 함께 전달합니다.
 스키마와 예시는 [객체 입력 설명](skills/light-probe/references/scene-context.md)에 있습니다.
 
 ```sh
-python skills/light-probe/scripts/run.py analyze photo.jpg --out outputs/my-objects --mode quick --display all --context context.json
+python skills/light-probe/scripts/run.py analyze photo.jpg --out outputs/my-objects --mode diffusion --quality fast --display all --context context.json
 ```
 
 결과는 `annotated.png`, `result.json`, `status.json`, 원본 색을 보존한 `input.png`입니다.
@@ -85,18 +108,19 @@ python skills/light-probe/scripts/run.py analyze photo.jpg --out outputs/my-obje
 python skills/light-probe/scripts/run.py render --result outputs/my-objects/result.json --out outputs/revised --context revised-context.json
 ```
 
-DiffusionLight를 쓰려면 [선택 모델 설치](skills/light-probe/references/diffusion.md)를 읽으세요.
-상태 확인은 `scripts/download_models.py --check`, 다운로드는 별도 `--download` 명령입니다.
+기본 분석은 `--mode diffusion --quality fast`를 명시합니다. 저수준 CLI의 생략 기본값은 기존 호환을 위해 quick이며, 스킬은 위 명령처럼 모드를 지정합니다.
+큰 모델 없이 실행해 달라고 요청한 경우에는 `--mode quick`을 사용합니다.
+[최신 스킬 ZIP](https://github.com/hyun2xyz/light-probe-skill/releases/latest/download/light-probe.zip)에도 같은 설치 가이드가 들어 있습니다.
 
 ## 공개 데모와 검증
 
-동봉 데모는 직접 그린 합성 실내 장면입니다. 실제 사진이나 모델 정확도 벤치마크가 아닙니다.
+동봉 데모는 quick 모드로 검증하는 합성 실내 장면입니다. 실제 사진이나 모델 정확도 벤치마크가 아닙니다.
 
 ![합성 장면 데모](docs/demo-annotated.png)
 
 ```sh
 python examples/make_demo.py --out outputs/demo-input
-python skills/light-probe/scripts/run.py analyze outputs/demo-input/room.png --out outputs/demo --display all --context outputs/demo-input/context.json
+python skills/light-probe/scripts/run.py analyze outputs/demo-input/room.png --out outputs/demo --mode quick --display all --context outputs/demo-input/context.json
 python -m unittest discover -s skills/light-probe/scripts -p "test_*.py" -v
 python -m unittest discover -s tests -v
 ```
