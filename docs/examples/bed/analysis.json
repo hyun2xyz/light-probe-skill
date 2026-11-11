@@ -1,0 +1,1034 @@
+{
+  "mode": "diffusion",
+  "quality": "fast",
+  "device": "mps",
+  "elapsed_ms": 47381,
+  "render_elapsed_ms": 322,
+  "width": 1024,
+  "height": 1024,
+  "anchor": [
+    0.5,
+    0.65
+  ],
+  "display": "all",
+  "seed": 200,
+  "steps_per_exposure": 12,
+  "exposures": [
+    0.0
+  ],
+  "lights": [
+    {
+      "x": 0.7715546464920044,
+      "y": 0.41964101791381836,
+      "strength": 1.0,
+      "color": "#ffffff",
+      "label": "추정 광원 1",
+      "direction": [
+        0.7146175,
+        0.6062078,
+        0.3490472
+      ],
+      "projection": "orthographic_direction_marker",
+      "azimuth_deg": 63.96730339052064,
+      "elevation_deg": 37.31580442360457
+    },
+    {
+      "x": 0.376824711561203,
+      "y": 0.29636332988739017,
+      "strength": 0.96117,
+      "color": "#fefffe",
+      "label": "추정 광원 2",
+      "direction": [
+        -0.3241455,
+        0.9306228,
+        -0.1699147
+      ],
+      "projection": "orthographic_direction_marker",
+      "azimuth_deg": -117.6631995256742,
+      "elevation_deg": 68.53210712067911
+    },
+    {
+      "x": 0.2899230897426605,
+      "y": 0.41299265503883364,
+      "strength": 0.91096,
+      "color": "#ffffff",
+      "label": "추정 광원 3",
+      "direction": [
+        -0.552834,
+        0.6237035,
+        0.5526015
+      ],
+      "projection": "orthographic_direction_marker",
+      "azimuth_deg": -45.01205069725042,
+      "elevation_deg": 38.587090944633864
+    }
+  ],
+  "note": "DiffusionLight 생성 기반 조명 추정입니다. 빠른 모드는 512px·12단계·EV0 단일 LDR 근사이며 HDR 복원이 아닙니다. 3D 방향은 카메라 기준 +x 오른쪽, +y 위쪽, +z 관찰자 쪽입니다. 사진 위 x/y는 기준점에서 방향을 정사영한 표시 좌표이며 실제 광원 위치가 아닙니다. 광도는 상대값이며 lux, 재질 굴절률, 실제 장면 기하를 측정하지 않습니다.",
+  "optics": null,
+  "object_overlay": {
+    "style": "muted-silhouettes",
+    "masks": [
+      {
+        "object_id": "wall",
+        "source": "llm_visual",
+        "geometry": "provided_polygon",
+        "opacity": 0.16,
+        "color": [
+          150,
+          177,
+          177
+        ]
+      },
+      {
+        "object_id": "curtain",
+        "source": "llm_visual",
+        "geometry": "provided_polygon",
+        "opacity": 0.2,
+        "color": [
+          191,
+          178,
+          151
+        ]
+      },
+      {
+        "object_id": "bed",
+        "source": "llm_visual",
+        "geometry": "provided_polygon",
+        "opacity": 0.2,
+        "color": [
+          173,
+          161,
+          185
+        ]
+      },
+      {
+        "object_id": "pillow",
+        "source": "llm_visual",
+        "geometry": "provided_polygon",
+        "opacity": 0.2,
+        "color": [
+          166,
+          188,
+          163
+        ]
+      },
+      {
+        "object_id": "lamp",
+        "source": "llm_visual",
+        "geometry": "provided_polygon",
+        "opacity": 0.2,
+        "color": [
+          193,
+          158,
+          157
+        ]
+      }
+    ],
+    "unmasked_object_ids": [],
+    "occlusion_order": "back-to-front"
+  },
+  "scattering": {
+    "segments": [
+      {
+        "a": [
+          512.0,
+          665.6
+        ],
+        "b": [
+          343.0400000000001,
+          522.2717450204733
+        ],
+        "energy": 0.03,
+        "bounce": 1,
+        "kind": "specular",
+        "from_object": "bed",
+        "to_object": "lamp",
+        "hit": true,
+        "termination": "branch_limit"
+      },
+      {
+        "a": [
+          512.0,
+          665.6
+        ],
+        "b": [
+          137.77186599838035,
+          529.3920983984267
+        ],
+        "energy": 0.048384348281766784,
+        "bounce": 1,
+        "kind": "diffuse",
+        "from_object": "bed",
+        "to_object": "pillow",
+        "hit": true,
+        "termination": "branch_limit"
+      },
+      {
+        "a": [
+          512.0,
+          665.6
+        ],
+        "b": [
+          445.44,
+          570.5424686712448
+        ],
+        "energy": 0.11588246651560673,
+        "bounce": 1,
+        "kind": "diffuse",
+        "from_object": "bed",
+        "to_object": "wall",
+        "hit": true,
+        "termination": "continued"
+      },
+      {
+        "a": [
+          512.0,
+          665.6
+        ],
+        "b": [
+          512.0,
+          0.0
+        ],
+        "energy": 0.14146637040525298,
+        "bounce": 1,
+        "kind": "diffuse",
+        "from_object": "bed",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          512.0,
+          665.6
+        ],
+        "b": [
+          752.64,
+          321.9304636575776
+        ],
+        "energy": 0.11588246651560673,
+        "bounce": 1,
+        "kind": "diffuse",
+        "from_object": "bed",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "continued"
+      },
+      {
+        "a": [
+          512.0,
+          665.6
+        ],
+        "b": [
+          752.64,
+          578.0142028261811
+        ],
+        "energy": 0.04838434828176674,
+        "bounce": 1,
+        "kind": "diffuse",
+        "from_object": "bed",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "branch_limit"
+      },
+      {
+        "a": [
+          445.44,
+          570.5424686712448
+        ],
+        "b": [
+          752.64,
+          131.8154010000672
+        ],
+        "energy": 0.0015644132979606908,
+        "bounce": 2,
+        "kind": "specular",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "branch_limit"
+      },
+      {
+        "a": [
+          445.44,
+          570.5424686712448
+        ],
+        "b": [
+          653.1004759810905,
+          0.0
+        ],
+        "energy": 0.005207257044624308,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          445.44,
+          570.5424686712448
+        ],
+        "b": [
+          752.64,
+          355.438712933222
+        ],
+        "energy": 0.012471590742480472,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "continued"
+      },
+      {
+        "a": [
+          445.44,
+          570.5424686712448
+        ],
+        "b": [
+          752.64,
+          570.5424686712448
+        ],
+        "energy": 0.01522500105985278,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "continued"
+      },
+      {
+        "a": [
+          445.44,
+          570.5424686712448
+        ],
+        "b": [
+          581.1962238929879,
+          665.6
+        ],
+        "energy": 0.012471590742480472,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "branch_limit"
+      },
+      {
+        "a": [
+          445.44,
+          570.5424686712448
+        ],
+        "b": [
+          480.0381119464939,
+          665.6
+        ],
+        "energy": 0.005207257044624304,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "branch_limit"
+      },
+      {
+        "a": [
+          752.64,
+          570.5424686712448
+        ],
+        "b": [
+          445.44,
+          570.5424686712448
+        ],
+        "energy": 0.0005024250349751417,
+        "bounce": 3,
+        "kind": "specular",
+        "from_object": "curtain",
+        "to_object": "wall",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          752.64,
+          570.5424686712448
+        ],
+        "b": [
+          718.0418880535061,
+          665.6
+        ],
+        "energy": 0.000810316929257204,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          752.64,
+          570.5424686712448
+        ],
+        "b": [
+          616.8837761070122,
+          665.6
+        ],
+        "energy": 0.0019407417430703138,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          752.64,
+          570.5424686712448
+        ],
+        "b": [
+          445.44,
+          570.5424686712448
+        ],
+        "energy": 0.0023692082032888535,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "wall",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          752.64,
+          570.5424686712448
+        ],
+        "b": [
+          445.44,
+          355.438712933222
+        ],
+        "energy": 0.0019407417430703138,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "wall",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          752.64,
+          570.5424686712448
+        ],
+        "b": [
+          544.9795240189095,
+          0.0
+        ],
+        "energy": 0.0008103169292572035,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          752.64,
+          355.438712933222
+        ],
+        "b": [
+          245.0209106054363,
+          0.0
+        ],
+        "energy": 0.0004115624945018556,
+        "bounce": 3,
+        "kind": "specular",
+        "from_object": "curtain",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          752.64,
+          355.438712933222
+        ],
+        "b": [
+          639.7505236859979,
+          665.6000000000001
+        ],
+        "energy": 0.000663772769123017,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          752.64,
+          355.438712933222
+        ],
+        "b": [
+          445.44,
+          570.5424686712448
+        ],
+        "energy": 0.0015897625662730287,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "wall",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          752.64,
+          355.438712933222
+        ],
+        "b": [
+          445.44,
+          355.438712933222
+        ],
+        "energy": 0.0019407417430703133,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "wall",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          752.64,
+          355.438712933222
+        ],
+        "b": [
+          245.0209106054363,
+          0.0
+        ],
+        "energy": 0.0015897625662730287,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          752.64,
+          355.438712933222
+        ],
+        "b": [
+          623.2708883864177,
+          0.0
+        ],
+        "energy": 0.0006637727691230161,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          752.64,
+          321.9304636575776
+        ],
+        "b": [
+          527.2218625676171,
+          0.0
+        ],
+        "energy": 0.003824121395015022,
+        "bounce": 2,
+        "kind": "specular",
+        "from_object": "curtain",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          752.64,
+          321.9304636575776
+        ],
+        "b": [
+          627.5545183472913,
+          665.6
+        ],
+        "energy": 0.006167587381605424,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "branch_limit"
+      },
+      {
+        "a": [
+          752.64,
+          321.9304636575776
+        ],
+        "b": [
+          445.44,
+          537.0342193956004
+        ],
+        "energy": 0.014771620650314787,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "wall",
+        "hit": true,
+        "termination": "continued"
+      },
+      {
+        "a": [
+          752.64,
+          321.9304636575776
+        ],
+        "b": [
+          445.44,
+          321.9304636575776
+        ],
+        "energy": 0.018032819124728264,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": "wall",
+        "hit": true,
+        "termination": "continued"
+      },
+      {
+        "a": [
+          752.64,
+          321.9304636575776
+        ],
+        "b": [
+          292.8756500178658,
+          0.0
+        ],
+        "energy": 0.014771620650314787,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          752.64,
+          321.9304636575776
+        ],
+        "b": [
+          635.4668937251242,
+          0.0
+        ],
+        "energy": 0.006167587381605416,
+        "bounce": 2,
+        "kind": "diffuse",
+        "from_object": "curtain",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          445.44,
+          321.9304636575776
+        ],
+        "b": [
+          752.64,
+          321.9304636575776
+        ],
+        "energy": 0.00024344305818383157,
+        "bounce": 3,
+        "kind": "specular",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          321.9304636575776
+        ],
+        "b": [
+          562.6131062748757,
+          0.0
+        ],
+        "energy": 0.0008103169292572038,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          445.44,
+          321.9304636575776
+        ],
+        "b": [
+          752.64,
+          106.82670791955479
+        ],
+        "energy": 0.0019407417430703131,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          321.9304636575776
+        ],
+        "b": [
+          752.64,
+          321.9304636575776
+        ],
+        "energy": 0.002369208203288853,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          321.9304636575776
+        ],
+        "b": [
+          752.64,
+          537.0342193956004
+        ],
+        "energy": 0.0019407417430703131,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          321.9304636575776
+        ],
+        "b": [
+          570.5254816527087,
+          665.6
+        ],
+        "energy": 0.0008103169292572043,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          537.0342193956004
+        ],
+        "b": [
+          629.0509633054173,
+          665.6
+        ],
+        "energy": 0.0001994168787792496,
+        "bounce": 3,
+        "kind": "specular",
+        "from_object": "wall",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          537.0342193956004
+        ],
+        "b": [
+          640.9044706423838,
+          0.0
+        ],
+        "energy": 0.0006637727691230168,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": null,
+        "hit": false,
+        "termination": "frame_boundary"
+      },
+      {
+        "a": [
+          445.44,
+          537.0342193956004
+        ],
+        "b": [
+          752.64,
+          321.9304636575776
+        ],
+        "energy": 0.0015897625662730282,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          537.0342193956004
+        ],
+        "b": [
+          752.64,
+          537.0342193956004
+        ],
+        "energy": 0.0019407417430703131,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "curtain",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          537.0342193956004
+        ],
+        "b": [
+          629.0509633054173,
+          665.6
+        ],
+        "energy": 0.0015897625662730282,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "depth_limit"
+      },
+      {
+        "a": [
+          445.44,
+          537.0342193956004
+        ],
+        "b": [
+          492.2341172852005,
+          665.6
+        ],
+        "energy": 0.000663772769123017,
+        "bounce": 3,
+        "kind": "diffuse",
+        "from_object": "wall",
+        "to_object": "bed",
+        "hit": true,
+        "termination": "depth_limit"
+      }
+    ],
+    "hits": [
+      {
+        "point": [
+          512.0,
+          665.6
+        ],
+        "object_id": "bed",
+        "surface_id": "bed_plane",
+        "bounce": 1,
+        "energy_in": 1.0,
+        "reflected_energy": 0.5,
+        "absorbed_energy": 0.5,
+        "drawn_energy": 0.49999999999999994,
+        "normal": [
+          0.0,
+          -1.0
+        ],
+        "incoming_direction": [
+          -0.7625798132095372,
+          0.6468941400919531
+        ]
+      },
+      {
+        "point": [
+          445.44,
+          570.5424686712448
+        ],
+        "object_id": "wall",
+        "surface_id": "wall_plane",
+        "bounce": 2,
+        "energy_in": 0.11588246651560673,
+        "reflected_energy": 0.052147109932023025,
+        "absorbed_energy": 0.0637353565835837,
+        "drawn_energy": 0.052147109932023025,
+        "normal": [
+          1.0,
+          -0.0
+        ],
+        "incoming_direction": [
+          -0.573576436351046,
+          -0.8191520442889918
+        ]
+      },
+      {
+        "point": [
+          752.64,
+          570.5424686712448
+        ],
+        "object_id": "curtain",
+        "surface_id": "curtain_plane",
+        "bounce": 3,
+        "energy_in": 0.01522500105985278,
+        "reflected_energy": 0.00837375058291903,
+        "absorbed_energy": 0.006851250476933749,
+        "drawn_energy": 0.00837375058291903,
+        "normal": [
+          -1.0,
+          0.0
+        ],
+        "incoming_direction": [
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "point": [
+          752.64,
+          355.438712933222
+        ],
+        "object_id": "curtain",
+        "surface_id": "curtain_plane",
+        "bounce": 3,
+        "energy_in": 0.012471590742480472,
+        "reflected_energy": 0.00685937490836426,
+        "absorbed_energy": 0.005612215834116212,
+        "drawn_energy": 0.006859374908364259,
+        "normal": [
+          -1.0,
+          0.0
+        ],
+        "incoming_direction": [
+          0.8191520442889918,
+          -0.573576436351046
+        ]
+      },
+      {
+        "point": [
+          752.64,
+          321.9304636575776
+        ],
+        "object_id": "curtain",
+        "surface_id": "curtain_plane",
+        "bounce": 2,
+        "energy_in": 0.11588246651560673,
+        "reflected_energy": 0.0637353565835837,
+        "absorbed_energy": 0.052147109932023025,
+        "drawn_energy": 0.0637353565835837,
+        "normal": [
+          -1.0,
+          0.0
+        ],
+        "incoming_direction": [
+          0.573576436351046,
+          -0.8191520442889918
+        ]
+      },
+      {
+        "point": [
+          445.44,
+          321.9304636575776
+        ],
+        "object_id": "wall",
+        "surface_id": "wall_plane",
+        "bounce": 3,
+        "energy_in": 0.018032819124728264,
+        "reflected_energy": 0.008114768606127719,
+        "absorbed_energy": 0.009918050518600546,
+        "drawn_energy": 0.008114768606127719,
+        "normal": [
+          1.0,
+          -0.0
+        ],
+        "incoming_direction": [
+          -1.0,
+          0.0
+        ]
+      },
+      {
+        "point": [
+          445.44,
+          537.0342193956004
+        ],
+        "object_id": "wall",
+        "surface_id": "wall_plane",
+        "bounce": 3,
+        "energy_in": 0.014771620650314787,
+        "reflected_energy": 0.006647229292641653,
+        "absorbed_energy": 0.008124391357673134,
+        "drawn_energy": 0.006647229292641653,
+        "normal": [
+          1.0,
+          -0.0
+        ],
+        "incoming_direction": [
+          -0.8191520442889918,
+          0.573576436351046
+        ]
+      }
+    ],
+    "assumptions": "2D assumed segments; user supplied/LLM assumed material coefficients. Detection boxes are annotations, not collision geometry. Five fixed diffuse directions use cosine-normalized weights; this is an explanatory 2D model, not reconstructed 3D or a calibrated radiometric simulation.",
+    "max_bounces": 3,
+    "initial_surface_id": "bed_plane",
+    "energy_accounting": {
+      "input_energy": 1.0,
+      "absorbed_energy": 0.6463883747029303,
+      "escaped_energy": 0.17638646133434785,
+      "branch_limited_energy": 0.15217954503020442,
+      "depth_limited_energy": 0.025045618932517336,
+      "untraced_energy": 0.17722516396272175,
+      "accounted_energy": 0.9999999999999999
+    },
+    "geometry_epsilon_px": 1.4481546878700496e-06,
+    "initial_point_tolerance_px": 0.00014481546878700494,
+    "visualization": {
+      "selected_segments": 18,
+      "unhit_rays_shortened": true
+    }
+  },
+  "input_sha256": "460218179f53cf954004cd45b60c6b1c844ac7d086c4c0ebddbc46c7d1e7340f",
+  "source": {
+    "checked_on": "2026-11-11",
+    "purpose": "Educational before/after display; not a training dataset or accuracy benchmark",
+    "inference_mode": "diffusion/fast",
+    "inference_code_commit": "local predecessor of the public repository",
+    "title": "A bed with a blanket on it in a bedroom",
+    "author": "Sydney Moore",
+    "page": "https://unsplash.com/photos/a-bed-with-a-blanket-on-it-in-a-bedroom-wJtEEDb4HBM",
+    "license_name": "Unsplash License",
+    "license_url": "https://unsplash.com/license",
+    "upstream_crop": "https://github.com/DiffusionLight/DiffusionLight/blob/main/example/bed.png",
+    "processing": "Existing square crop via DiffusionLight; previous real inference reused, labels redrawn",
+    "timing": "47.381 seconds including initial model loading; inference reused, not rerun in this example update"
+  },
+  "generated_evidence": {
+    "ball_ev00.png": "0fa0f817e0d49cbab8076950dec66afe71548b88ad6339f88d1b56dc14f3f685",
+    "probe_preview.png": "624cd71ca59db7de78684fbaa6f4232e5170880dc6d7bb7773cc689882d8ee0e"
+  }
+}

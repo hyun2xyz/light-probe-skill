@@ -101,4 +101,6 @@ python scripts/light_probe.py analyze input.jpg --out result-diffusion --mode di
 
 포팅 시 원본 환경에서 확인한 버전은 Python 런타임의 torch 2.15.0, diffusers 0.33.1, transformers 4.51.3, huggingface_hub 0.36.2, peft 0.21.2, accelerate 1.15.0, safetensors 0.8.0, filelock 4.2.10이다. 이는 모든 장치에서 이 조합의 설치·성능을 보증하는 표가 아니다.
 
-원본 구현에는 Apple MPS에서 `fast` 추론이 성공한 기록이 있다. 공개 배포용 포팅에서는 기존 캐시의 읽기 전용 준비 상태, 파일 목록·해시 메타데이터, 작은 가상 파일 다운로드, 잠금·경로·offline 회귀 검사를 수행한다. 대형 모델을 새로 다운로드하거나 추론을 다시 실행하지 않는다. **새 Windows/Linux 컴퓨터의 실제 설치·GPU 추론, 새 캐시에서의 전체 모델 다운로드, `full` 세 노출 실제 생성은 미검증**이다. 사용 장치에서 별도로 확인해야 한다.
+원본 구현에는 Apple MPS에서 `fast` 추론이 성공한 기록이 있다. 최초 포팅 때 기존 캐시 준비 상태, 파일 목록·해시 메타데이터, 작은 가상 파일 다운로드, 잠금·경로·offline 회귀 검사를 수행했다.
+이후 2026-11-11 공개 배포 코드로 무료 실사 사진 두 장을 Apple MPS에서 실제로 추론했다. 실내는 최초 로딩 포함 41.969초, 외벽은 같은 프로세스의 모델 재사용으로 9.299초가 걸렸다. [사진·출처·실행 기록](https://github.com/hyun2xyz/light-probe-skill/tree/main/docs/examples)에 결과를 보관했다.
+기존 캐시를 사용했으며 **새 Windows/Linux GPU 추론, 새 캐시의 전체 모델 다운로드, `full` 세 노출 실제 생성은 미검증**이다. 기본 quick 설치·테스트의 OS별 CI와 GPU 모델 검증을 구분한다.
